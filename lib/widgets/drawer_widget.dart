@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/providers/group_api.dart';
 import 'package:homework/providers/homework_api.dart';
-import 'package:homework/providers/student_api.dart';
 import 'package:provider/provider.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -15,6 +14,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      
       child: ListView(
         children: [
           const DrawerHeader(
@@ -29,7 +29,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         title: Text(categoryItem),
                         leading: const Icon(Icons.payment),
                       ),
-                      body: SubCategory(),
+                      body: const SubCategory(),
                     ))
                 .toList(),
           ),
@@ -50,14 +50,19 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   String headerDrawer = 'Python';
 }
 
-class SubCategory extends StatelessWidget {
+class SubCategory extends StatefulWidget {
   const SubCategory({
     super.key,
   });
 
   @override
+  State<SubCategory> createState() => _SubCategoryState();
+}
+
+class _SubCategoryState extends State<SubCategory> {
+  @override
   Widget build(BuildContext context) {
-    final groups = Provider.of<GroupApi>(context,listen: false).groups;
+    final groups = Provider.of<GroupApi>(context, listen: false).groups;
     return SizedBox(
       height: 500,
       child: ListView.builder(
@@ -65,8 +70,25 @@ class SubCategory extends StatelessWidget {
         itemBuilder: (context, index) => ListTile(
           title: Text(groups[index].name),
           onTap: () async{
-            Provider.of<HomeworkApi>(context,listen: false).getHomework(groups[index].id);
-            await Provider.of<StudentApi>(context,listen: false).getStudent(groups[index].id, 14);
+            showDialog(
+              context: context,
+              builder: (ctx) => const Center(child: CircularProgressIndicator.adaptive()),
+            );
+            await Provider.of<HomeworkApi>(context, listen: false)
+                .getHomework(groups[index].id)
+                .catchError(
+              (error) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Something went wrong!'),
+                    content: Text(error.toString()),
+                  ),
+                );
+              },
+            );
+            Navigator.pop(context);
+            Navigator.pop(context);
           },
         ),
       ),

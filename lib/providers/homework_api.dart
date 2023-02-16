@@ -10,17 +10,25 @@ class HomeworkApi with ChangeNotifier{
   List<Homework> get homeworks {
     return _homeworks;
   }
+  void search(String word){
+    _homeworks = _homeworks.where((element) => element.name.contains(word)).toList();
+    notifyListeners();
+  }
 
   Future<void> getHomework([int id = 0])async{
     Uri url = Uri(
         scheme: 'https',
         host: 'codeschoolhomeworkapi.pythonanywhere.com',
         path: 'homework/get-homeworks/$id/');
+    try{
     http.Response response = await http.get(url);
 
     List dataFromJson = jsonDecode(response.body);
     _homeworks = dataFromJson.map((e) => Homework.getHomework(e)).toList();
-    print(_homeworks);
+    
+    }catch(_){
+      rethrow;
+    }
     notifyListeners();
   }
 }

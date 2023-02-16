@@ -8,11 +8,13 @@ class HomeworkTapWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: data.length,
-      itemBuilder: (context, index) => ListTile(
-        
-        title: Text(data[index].name),
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: ListView.builder(                  
+        itemCount: data.length,
+        itemBuilder: (context, index) => ListTile(          
+          title: Text(data[index].name),
+        ),
       ),
     );
   }
