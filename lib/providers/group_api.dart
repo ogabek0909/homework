@@ -8,19 +8,16 @@ class GroupApi with ChangeNotifier{
 
   List<Group> _groups = [];
   List<Group> get groups {
-    return _groups;
+    return [..._groups];
   }
 
-  Future<void> getGroup()async{
-    Uri url = Uri(
-      scheme: 'https',
-      host: 'codeschoolhomeworkapi.pythonanywhere.com',
-      path: 'student/get-groups/',
-    );
+  Future<List<Group>> getGroup(int id)async{
+    Uri url = Uri.parse('https://codeschooluzapi.pythonanywhere.com/group/$id/');
     http.Response response = await http.get(url);
     List dataFromJson = jsonDecode(response.body);
     _groups = dataFromJson.map((e) => Group.getGroup(e)).toList();
-    notifyListeners();
+    
+    return _groups;
   }
 
 }

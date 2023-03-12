@@ -10,18 +10,22 @@ class StudentApi with ChangeNotifier {
     return _students;
   }
 
-  Future<void> getStudent(int groupId, int homeworkId) async {
+  Future<void> getStudent({int? groupId}) async {
+    String path =
+        groupId != null ? '/get-students-from-group/$groupId/' : 'student/all/';
     Uri url = Uri(
-        scheme: 'https',
-        host: 'codeschoolhomeworkapi.pythonanywhere.com',
-        path: 'homework/get-results/$groupId/$homeworkId/');
+      scheme: 'https',
+      host: 'codeschooluzapi.pythonanywhere.com',
+      path: path,
+    );
 
     http.Response response = await http.get(url);
+    // print(response.body);
 
-    Map<String, dynamic> dataFromJson = jsonDecode(response.body);
+    List dataFromJson = jsonDecode(response.body);
 
-    _students = dataFromJson['ok'].map((e) => Student.getStudent(e)).toList();
-    print(_students);
+    _students = dataFromJson.map((e) => Student.getStudent(e)).toList();
+    // print(_students);
     notifyListeners();
   }
 }
