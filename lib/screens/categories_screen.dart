@@ -43,7 +43,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     icon: const Icon(Icons.menu),
                   ),
                   const SizedBox(width: 10),
-                  const Text('Group Name'),
+                  const Text(
+                    'Group name',
+                  ),
                   const SizedBox(width: 10),
                   const Spacer(),
                   const Expanded(
@@ -89,8 +91,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           child: Text(snapshot.error.toString()),
                         );
                       } else {
-
-        Provider.of<AssignmentApi>(context,listen: false).nullAssignment();
+                        Provider.of<AssignmentApi>(context, listen: false)
+                            .nullAssignment();
                         return Row(
                           children: const [
                             LessonTapWidget(),
@@ -102,7 +104,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   ),
                   FutureBuilder(
                     future: Provider.of<StudentApi>(context, listen: false)
-                        .getStudent(),
+                        .getStudent(groupId: widget.id),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const Center(
@@ -120,7 +122,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     },
                   ),
                   const Center(
-                    child: Text('salom'),
+                    child: Text('This screen does not work'),
                   )
                 ],
               ),
@@ -131,4 +133,3 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     );
   }
 }
-

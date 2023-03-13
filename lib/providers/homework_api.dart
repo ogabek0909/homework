@@ -19,10 +19,10 @@ class HomeworkApi with ChangeNotifier {
     );
     try {
       http.Response response = await http.get(url);
-      // print(response.body);
 
       List dataFromJson = jsonDecode(response.body);
       _homeworks = dataFromJson.map((e) => Lesson.getLesson(e)).toList();
+      
     } catch (_) {
       rethrow;
     }

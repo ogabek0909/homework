@@ -31,7 +31,12 @@ class ResultApi with ChangeNotifier {
     );
     List data = jsonDecode(response.body);
     _allResults = data.map((e) => Result.getResult(e)).toList();
-    print(response.body);
+    _allResults.sort((a, b) {
+      if(a.rightAnswers == b.rightAnswers){
+        return a.attempt.compareTo(b.rightAnswers);
+      }
+      return b.rightAnswers.compareTo(a.rightAnswers);
+    },);
     notifyListeners();
   }
 }

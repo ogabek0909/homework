@@ -3,7 +3,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homework/providers/course_api.dart';
 import 'package:homework/providers/group_api.dart';
-import 'package:homework/providers/homework_api.dart';
 import 'package:homework/screens/categories_screen.dart';
 import 'package:provider/provider.dart';
 

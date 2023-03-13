@@ -11,17 +11,17 @@ class Result {
   });
 
   factory Result.getResult(Map data) {
-    int _rightAnswers = 0;
+    int rightAnswerss = 0;
     for (Map i in data['result']) {
       if (i['is_correct']) {
-        _rightAnswers++;
+        rightAnswerss++;
       }
     }
     return Result(
       student: data['student'],
       attempt: data['attempt'],
       result: data['result'],
-      rightAnswers: _rightAnswers,
+      rightAnswers: rightAnswerss,
     );
   }
 }

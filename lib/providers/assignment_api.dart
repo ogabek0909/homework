@@ -34,7 +34,6 @@ class AssignmentApi with ChangeNotifier{
     List data = jsonDecode(response.body);
     _allAssignment = data.map((e) => Assignment.getAssignment(e)).toList();
     _lessonId = id;
-    print(response.body);
     notifyListeners();
   }
 }
